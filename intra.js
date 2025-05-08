@@ -1,5 +1,5 @@
 // MoMo Number for Payment
-const momoNumber = "0241234567"; // Replace with your MoMo number
+const momoNumber = "0533125955"; // Replace with your MoMo number
 const deliveryFee = 6.00; // Delivery fee in Ghana cedis
 
 // Orders array to store all user orders
@@ -63,7 +63,7 @@ function handleOrderSubmission(event) {
         <strong>Block:</strong> ${block}<br>
         <strong>Room:</strong> ${room}<br><br>
         Please send the payment of <strong>GH₵${totalAmount.toFixed(2)}</strong> to the following MoMo number:<br>
-        <strong>${momoNumber}</strong>
+        <strong>${momoNumber}</strong><br>Reference your name.
     `;
 
     // Clear the form
