@@ -1,0 +1,90 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header Styling */
+header {
+    background-color: #54f7d3;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+header nav {
+    margin-top: 1rem;
+}
+
+header nav button {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    background-color: white;
+    color: #4caf6a;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header nav button:hover {
+    background-color: #ddd;
+}
+
+/* Main Section */
+main {
+    padding: 2rem;
+}
+
+/* Section Styling */
+section {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+
+/* Form Styling */
+form {
+    display: grid;
+    gap: 1rem;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input, form textarea, form button {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: #73ce75;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #26d82f;
+}
+
+/* Admin Orders */
+#orders-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#orders-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Error Message */
+#error-message {
+    color: red;
+    font-weight: bold;
+}
