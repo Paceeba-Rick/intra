@@ -57,13 +57,13 @@ function handleOrderSubmission(event) {
         Thank you, <strong>${name}</strong>!<br>
         Your order has been received.<br>
         <strong>Description:</strong> ${description}<br>
-        <strong>Food Amount:</strong> GH₵${amount.toFixed(2)}<br>
+        <strong> Amount:</strong> GH₵${amount.toFixed(2)}<br>
         <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
         <strong>Total Amount:</strong> GH₵${totalAmount.toFixed(2)}<br>
         <strong>Block:</strong> ${block}<br>
         <strong>Room:</strong> ${room}<br><br>
         Please send the payment of <strong>GH₵${totalAmount.toFixed(2)}</strong> to the following MoMo number:<br>
-        <strong>${momoNumber}</strong><br>Reference your name.
+        <strong>${momoNumber}</strong><br>.pls Reference your <strong>name</strong>.
     `;
 
     // Clear the form
