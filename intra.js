@@ -8,7 +8,7 @@ const orders = [];
 // Admin credentials
 const adminCredentials = {
     username: "Ceeba",
-    password: "malanyi@100"
+    password: "legon@main"
 };
 
 // Save orders to Local Storage
