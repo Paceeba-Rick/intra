@@ -1,5 +1,5 @@
 // MoMo Number for Payment
-const momoNumber = "0533125955"; // Replace with your MoMo number
+const momoNumber = "0533125955"; // MoMo number
 const deliveryFee = 6.00; // Delivery fee in Ghana cedis
 
 // Orders array to store all user orders
