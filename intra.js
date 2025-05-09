@@ -57,7 +57,7 @@ function handleOrderSubmission(event) {
         Thank you, <strong>${name}</strong>!<br>
         Your order has been received.<br>
         <strong>Description:</strong> ${description}<br>
-        <strong> Amount:</strong> GH₵${amount.toFixed(2)}<br>
+        <strong>Amount:</strong> GH₵${amount.toFixed(2)}<br>
         <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
         <strong>Total Amount:</strong> GH₵${totalAmount.toFixed(2)}<br>
         <strong>Block:</strong> ${block}<br>
@@ -101,7 +101,7 @@ function updateAdminDashboard() {
             <strong>${index + 1}. Name:</strong> ${order.name}<br>
             <strong>Block:</strong> ${order.block}, <strong>Room:</strong> ${order.room}<br>
             <strong>Description:</strong> ${order.description}<br>
-            <strong>Food Amount:</strong> GH₵${order.amount.toFixed(2)}<br>
+            <strong>Amount:</strong> GH₵${order.amount.toFixed(2)}<br>
             <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
             <strong>Total Amount:</strong> GH₵${order.totalAmount.toFixed(2)}<br>
             <button onclick="deleteOrder(${order.id})">Delete</button>
