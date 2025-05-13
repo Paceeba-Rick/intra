@@ -2,14 +2,13 @@
 const momoNumber = "0533125955"; // MoMo number
 const deliveryFee = 6.00; // Delivery fee in Ghana cedis
 
+backend_url = "https://api.intragh.africa/"
 // Orders array to store all user orders
 const orders = [];
 
+console.log(orders)
+
 // Admin credentials
-const adminCredentials = {
-    username: "Ceeba",
-    password: "legon@main"
-};
 
 // Save orders to Local Storage
 function saveOrdersToLocalStorage() {
@@ -18,16 +17,34 @@ function saveOrdersToLocalStorage() {
 
 // Load orders from Local Storage
 function loadOrdersFromLocalStorage() {
-    const storedOrders = localStorage.getItem("orders");
-    if (storedOrders) {
-        const parsedOrders = JSON.parse(storedOrders);
-        orders.push(...parsedOrders); // Load into the orders array
-    }
+    // Make GET request to fetch orders
+    fetch(backend_url + 'orders/')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            
+            orders.push(...data.data); // Load orders into the array
+            // updateAdminDashboard(); // Update the display
+        })
+        .catch(error => {
+            console.error('Error loading orders:', error);
+        });
+    // if (storedOrders) {
+    //     const parsedOrders = JSON.parse(storedOrders);
+    //     orders.push(...parsedOrders); // Load into the orders array
+    // }
 }
 
 // Handle Order Submission
 function handleOrderSubmission(event) {
     event.preventDefault();
+
+    const spinner = document.getElementById("spinner");
+    spinner.style.display = "block";
 
     // Get form values
     const name = document.getElementById("name").value;
@@ -42,40 +59,74 @@ function handleOrderSubmission(event) {
         alert("Please enter a valid amount greater than zero.");
         return; // Stop further execution
     }
+    // Prepare the order data
+    const orderData = {
+        name: name,
+        block: block,
+        room_number: room,
+        description: description,
+        amount: amount
+    };
 
-    // Calculate total amount (including delivery fee)
-    const totalAmount = amount + deliveryFee;
+    // Send order to backend
+    fetch(backend_url + 'orders/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        spinner.style.display = "none";
 
-    // Create an order object
-    const order = { id: Date.now(), name, block, room, description, amount, totalAmount };
-    orders.push(order);
+        
+        // Calculate total amount (including delivery fee)
+        const totalAmount = amount + deliveryFee;
 
-    // Display confirmation message
-    const responseMessage = document.getElementById("response-message");
-    responseMessage.style.display = "block";
-    responseMessage.innerHTML = `
-        Thank you, <strong>${name}</strong>!<br>
-        Your order has been received.<br>
-        <strong>Description:</strong> ${description}<br>
-        <strong>Amount:</strong> GH₵${amount.toFixed(2)}<br>
-        <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
-        <strong>Total Amount:</strong> GH₵${totalAmount.toFixed(2)}<br>
-        <strong>Block:</strong> ${block}<br>
-        <strong>Room:</strong> ${room}<br><br>
-        Please send the payment of <strong>GH₵${totalAmount.toFixed(2)}</strong> to the following MoMo number:<br>
-        <strong>${momoNumber}</strong><br>.pls Reference your <strong>name</strong>.
-    `;
+        // Create an order object
+        const order = { id: Date.now(), name, block, room, description, amount, totalAmount };
+        orders.push(order);
 
-    // Clear the form
-    document.getElementById("orderForm").reset();
+        // Display confirmation message
+        const responseMessage = document.getElementById("response-message");
+        responseMessage.style.display = "block";
+        responseMessage.innerHTML = `
+            Thank you, <strong>${name}</strong>!<br>
+            Your order has been received.<br>
+            <strong>Description:</strong> ${description}<br>
+            <strong>Amount:</strong> GH₵${amount.toFixed(2)}<br>
+            <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
+            <strong>Total Amount:</strong> GH₵${totalAmount.toFixed(2)}<br>
+            <strong>Block:</strong> ${block}<br>
+            <strong>Room:</strong> ${room}<br><br>
+            Please send the payment of <strong>GH₵${totalAmount.toFixed(2)}</strong> to the following MoMo number:<br>
+            <strong>${momoNumber}</strong><br>.pls Reference your <strong>name</strong>.
+        `;
 
-    // Set a timeout to hide the confirmation message after 1 hour (3600000 ms)
-    setTimeout(() => {
-        responseMessage.style.display = "none";
-    }, 3600000); // 1 hour in milliseconds
+        // Clear the form
+        document.getElementById("orderForm").reset();
 
-    // Update Admin Dashboard
-    updateAdminDashboard();
+        // Set timeout to hide confirmation
+        setTimeout(() => {
+            responseMessage.style.display = "none";
+        }, 3600000);
+
+        // Update Admin Dashboard
+        // updateAdminDashboard();
+    })
+    .catch(error => {
+        spinner.style.display = "none";
+        console.error('Error submitting order:', error);
+        alert('Failed to submit order. Please try again.');
+    });
+   
 }
 
 // Delete an order
@@ -99,12 +150,10 @@ function updateAdminDashboard() {
         const li = document.createElement("li");
         li.innerHTML = `
             <strong>${index + 1}. Name:</strong> ${order.name}<br>
-            <strong>Block:</strong> ${order.block}, <strong>Room:</strong> ${order.room}<br>
+            <strong>Block:</strong> ${order.block}, <strong>Room:</strong> ${order.room_number}<br>
             <strong>Description:</strong> ${order.description}<br>
             <strong>Amount:</strong> GH₵${order.amount.toFixed(2)}<br>
-            <strong>Delivery Fee:</strong> GH₵${deliveryFee.toFixed(2)}<br>
-            <strong>Total Amount:</strong> GH₵${order.totalAmount.toFixed(2)}<br>
-            <button onclick="deleteOrder(${order.id})">Delete</button>
+            <button onclick="deleteOrder(${order.pk})">Delete</button>
         `;
         ordersList.appendChild(li);
     });
@@ -113,21 +162,46 @@ function updateAdminDashboard() {
 // Load orders when the page loads
 document.addEventListener("DOMContentLoaded", () => {
     loadOrdersFromLocalStorage();
-    updateAdminDashboard();
+    // updateAdminDashboard();
 });
 
 // Handle Admin Login
 function handleAdminLogin(event) {
     event.preventDefault();
 
+    const spinner = document.getElementById("spinner_1");
+    spinner.style.display = "block";
+
     const username = document.getElementById("admin-username").value;
     const password = document.getElementById("admin-password").value;
 
-    if (username === adminCredentials.username && password === adminCredentials.password) {
-        switchToAdminView();
-    } else {
-        document.getElementById("login-error").style.display = "block";
-    }
+        // Create form data
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+
+        // Make POST request
+        fetch(backend_url + "auth/login", {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            spinner.style.display = "none";
+            if (response.status === 200) {
+                switchToAdminView();
+            } else if (response.status === 401) {
+                document.getElementById("login-error").style.display = "block";
+            } else {
+                console.error('Unexpected status:', response.status);
+                document.getElementById("login-error").style.display = "block";
+            }
+        })
+        .catch(error => {
+            spinner.style.display = "none";
+            console.error('Error:', error);
+            document.getElementById("login-error").style.display = "block";
+        });
+ 
 }
 
 // Switch Views

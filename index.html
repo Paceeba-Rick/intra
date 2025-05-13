@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Legon Hall Delivery (INTRA) </title>
-    <link rel="stylesheet" href="intra.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legon Hall Delivery (INTRA)</title>
+    <link rel="stylesheet" href="intra.css" />
 </head>
+
 <body>
     <header>
         <center>
-           <b>
-           <img id="logo" src="logo1.png"> 
-           </b>
+            <b>
+                <img id="logo" src="logo1.png" />
+            </b>
         </center>
-        <h1>Legon Hall Delivery </h1>
+        <h1>Legon Hall Delivery</h1>
         <nav>
             <button id="user-view-btn">User View</button>
             <button id="admin-view-btn">Admin Dashboard</button>
@@ -24,44 +26,49 @@
             <h2>Place Your Order</h2>
             <form id="orderForm">
                 <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Your Name" required>
-                
+                <input type="text" id="name" placeholder="Your Name" required />
+
                 <label for="block">Block:</label>
-                <input type="text" id="block" placeholder="Your Block (e.g., A)" required>
-                
+                <input type="text" id="block" placeholder="Your Block (e.g., A)" required />
+
                 <label for="room">Room Number:</label>
-                <input type="text" id="room" placeholder="Your Room Number" required>
-                
+                <input type="text" id="room" placeholder="Your Room Number" required />
+
                 <label for="description">Describe Your Order:</label>
-                <textarea id="description" placeholder="Provisions or Food, E.g., Fried Rice(20) Chicken(25)/Bread(7.50) and Bigoo" required></textarea>
-                
+                <textarea id="description"
+                    placeholder="Provisions or Food, E.g., Fried Rice(20) Chicken(25)/Bread(7.50) and Bigoo"
+                    required></textarea>
+
                 <label for="amount">Amount (GH₵):</label>
-                <input type="number" id="amount" placeholder="E.g., 50" required>
+                <input type="number" id="amount" placeholder="E.g., 50" required />
                 <button type="submit">Submit Order</button>
+                <div id="spinner" class="spinner" style="display: none"></div>
             </form>
         </section>
         <section id="order-response">
             <h2>Order Confirmation</h2>
-            <p id="response-message" style="display: none;"></p>
-           
+            <p id="response-message" style="display: none"></p>
         </section>
     </main>
-    <main id="admin-login-view" style="display: none;">
+    <main id="admin-login-view" style="display: none">
         <section id="admin-login">
             <h2>Admin Login</h2>
             <form id="adminLoginForm">
-                <label for="admin-username">Username:</label>
-                <input type="text" id="admin-username" placeholder="Admin Username" required>
-                
+                <label for="admin-username">Eamil:</label>
+                <input type="text" id="admin-username" placeholder="Admin Email" required />
+
                 <label for="admin-password">Password:</label>
-                <input type="password" id="admin-password" placeholder="Admin Password" required>
-                
+                <input type="password" id="admin-password" placeholder="Admin Password" required />
+
                 <button type="submit">Login</button>
+                <div id="spinner_1" class="spinner" style="display: none"></div>
             </form>
-            <p id="login-error" style="color: red; display: none;">Invalid credentials. Please try again.</p>
+            <p id="login-error" style="color: red; display: none">
+                Invalid credentials. Please try again.
+            </p>
         </section>
     </main>
-    <main id="admin-view" style="display: none;">
+    <main id="admin-view" style="display: none">
         <section id="admin-orders">
             <h2>Admin Dashboard</h2>
             <ul id="orders-list">
@@ -72,4 +79,5 @@
     </main>
     <script src="intra.js"></script>
 </body>
+
 </html>
